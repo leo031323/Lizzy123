@@ -7,8 +7,8 @@ import java.awt.event.ActionListener;
 
 public class Calculator extends JFrame implements ActionListener {
 
-    private JLabel display;  // 用于显示输入和结果
-    private StringBuilder input;  // 存储当前输入内容
+    private JLabel display;
+    private StringBuilder input;
     private double firstNumber = 0;
     private String operator = "";
 
@@ -20,7 +20,7 @@ public class Calculator extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
 
         display = new JLabel("0", SwingConstants.RIGHT);
-        display.setFont(new Font("Arial", Font.BOLD, 24));
+        display.setFont(new Font("Arial", Font.BOLD, 40));
         display.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         input = new StringBuilder();
 
@@ -37,12 +37,12 @@ public class Calculator extends JFrame implements ActionListener {
 
         for (String text : buttons) {
             JButton button = new JButton(text);
-            button.setFont(new Font("Arial", Font.PLAIN, 20));
+            button.setFont(new Font("Arial", Font.PLAIN, 40));
             button.addActionListener(this);
             buttonPanel.add(button);
         }
 
-        // 布局窗体
+
         setLayout(new BorderLayout());
         add(display, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.CENTER);
@@ -84,7 +84,7 @@ public class Calculator extends JFrame implements ActionListener {
             case "*":
                 return num1 * num2;
             case "/":
-                return num2 != 0 ? num1 / num2 : 0;  // 防止除以0
+                return num2 != 0 ? num1 / num2 : 0;
             default:
                 return 0;
         }
