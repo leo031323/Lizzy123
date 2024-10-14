@@ -6,3 +6,4 @@ public class XiaoMiBook extends Laptop{
         System.out.println("小米Book");
     }
 }
+
