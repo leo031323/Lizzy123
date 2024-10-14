@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class Calculator extends JFrame implements ActionListener {
 
     private JLabel display;
-    private StringBuilder input;
+    private StringBuilder expression;
     private double firstNumber = 0;
     private String operator = "";
 
@@ -20,10 +20,9 @@ public class Calculator extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
 
         display = new JLabel("0", SwingConstants.RIGHT);
-        display.setFont(new Font("Arial", Font.BOLD, 40));
+        display.setFont(new Font("Arial", Font.BOLD, 30));
         display.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        input = new StringBuilder();
-
+        expression = new StringBuilder();
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(4, 4, 5, 5));
@@ -42,7 +41,6 @@ public class Calculator extends JFrame implements ActionListener {
             buttonPanel.add(button);
         }
 
-
         setLayout(new BorderLayout());
         add(display, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.CENTER);
@@ -52,26 +50,40 @@ public class Calculator extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
 
-        if (command.matches("\\d")) {
-            input.append(command);
-            display.setText(input.toString());
-        } else if (command.equals("C")) {
-            input.setLength(0);
+        if (command.matches("\\d")) {  // 处理数字输入
+            expression.append(command);
+            display.setText(expression.toString());
+        } else if (command.equals("C")) {  // 处理清除按钮
+            expression.setLength(0);
             display.setText("0");
             firstNumber = 0;
             operator = "";
-        } else if (command.equals("=")) {
-            if (operator.isEmpty() || input.length() == 0) return;
-            double secondNumber = Double.parseDouble(input.toString());
+        } else if (command.equals("=")) {  // 处理等号按钮
+            if (operator.isEmpty() || expression.length() == 0) return;
+
+            // 解析第二个数字并计算
+            double secondNumber = Double.parseDouble(expression.toString());
             double result = calculate(firstNumber, secondNumber, operator);
-            display.setText(String.valueOf(result));
-            input.setLength(0);
+
+            // 显示完整表达式和结果
+            display.setText(firstNumber + " " + operator + " " + secondNumber + " = " + result);
+
+            // 重置状态
+            expression.setLength(0);
             operator = "";
-        } else {
-            if (input.length() == 0) return;
-            firstNumber = Double.parseDouble(input.toString());
+        } else {  // 处理操作符按钮
+            if (expression.length() == 0) return;
+
+            // 保存第一个数字和操作符
+            firstNumber = Double.parseDouble(expression.toString());
             operator = command;
-            input.setLength(0);
+
+            // 更新表达式以显示操作符
+            expression.append(" ").append(operator).append(" ");
+            display.setText(expression.toString());
+
+            // 准备接受下一个数字
+            expression.setLength(0);
         }
     }
 
@@ -89,4 +101,7 @@ public class Calculator extends JFrame implements ActionListener {
                 return 0;
         }
     }
+
 }
+
+
