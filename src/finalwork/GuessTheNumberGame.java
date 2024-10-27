@@ -17,7 +17,7 @@ public class GuessTheNumberGame {
             startGame(scanner);
             playAgain = askPlayAgain(scanner);
         }
-        System.out.println("感谢您的游玩，再见！");
+        System.out.println("感谢您的游玩，再见！\n2022307010235 夏启贤");
         scanner.close();
     }
 
